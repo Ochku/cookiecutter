@@ -18,7 +18,7 @@ Cookiecutter Data Science v2 requires Python 3.9+. Since this is a cross-project
 
 ```bash
 # Initialize a github repository to ensure pre-commit hooks are automatically linked during set up
-git clone https://github.com/sv-sawiday/cookie_cutter_test.git
+git clone https://github.com/Ochku/cookiecutter.git
 git init
 
 # Witin your IDE set up an environment for the cookiecutter dependancies to host
