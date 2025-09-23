@@ -33,7 +33,7 @@ pip install cookiecutter-data-science conda-lock
 To start a new project, run:
 
 ```bash
-cookiecutter https://github.com/sv-sawiday/cookiecutter_ds_template
+cookiecutter https://github.com/Ochku/cookiecutter_ds_template
 ```
 
 ### The resulting directory structure
