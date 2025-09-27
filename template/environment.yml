@@ -1,0 +1,66 @@
+name: {{ cookiecutter.project_slug }}
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python={{ cookiecutter.python_version_number }}
+
+  # Core packages (always included)
+  - pip
+  - setuptools
+  - wheel
+
+{% if cookiecutter.include_basic_packages == "yes" %}
+  # Basic data science packages
+  - numpy>=1.24.0
+  - pandas>=2.0.0
+  - scikit-learn>=1.3.0
+  - matplotlib>=3.7.0
+  - seaborn>=0.12.0
+  - jupyter>=1.0.0
+  - ipykernel
+{% endif %}
+
+{% if cookiecutter.include_database_packages == "yes" %}
+  # Database packages
+  - sqlalchemy>=2.0.0
+  - psycopg2>=2.9.0
+  - pymysql>=1.0.0
+{% endif %}
+
+{% if cookiecutter.include_visualisation_packages == "yes" %}
+  # Visualization packages
+  - plotly>=5.0.0
+  - bokeh>=3.0.0
+  - altair>=5.0.0
+{% endif %}
+
+  # Development tools
+  - ruff>=0.4.0
+  - black>=24.0.0
+  - mypy>=1.9.0
+  - pytest>=8.0.0
+  - conda-lock
+
+  # Additional utilities
+  - loguru>=0.7.0
+  - tqdm>=4.60.0
+
+  # Pip-only packages
+  - pip:
+    - pydantic>=2.0.0
+    - pydantic-settings>=2.0.0
+    - python-dotenv>=1.0.0
+    - bandit>=1.7.7
+    - nbstripout>=0.6.1
+    - mkdocs-material
+    - mkdocs-gen-files
+{% if cookiecutter.pre_commit_hook == "yes" %}
+    - pre-commit>=3.5.0
+{% endif %}
+{% if cookiecutter.include_database_packages == "yes" %}
+    - boto3
+    - pyathena
+    - google-cloud-bigquery
+    - google-auth
+{% endif %}

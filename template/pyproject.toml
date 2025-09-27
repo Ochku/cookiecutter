@@ -1,0 +1,88 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "{{ cookiecutter.module_name|tojson }}"
+version = "0.0.1"
+description = {{ cookiecutter.description|tojson }}
+authors = [
+  { name = {{ cookiecutter.author_name|tojson }} },
+]
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3"
+]
+requires-python = ">={{ cookiecutter.python_version_number }}"
+
+dependencies = [
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "loguru>=0.7.0",
+    "tqdm>=4.60.0",
+    {% if cookiecutter.include_basic_packages == "yes" %}
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "scikit-learn>=1.3.0",
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+    "jupyter>=1.0.0",
+    {% endif %}
+    {% if cookiecutter.include_database_packages == "yes" %}
+    "sqlalchemy>=2.0.0",
+    "pymysql>=1.0.0",
+    "psycopg2>=2.9.0",
+    {% endif %}
+    {% if cookiecutter.include_visualisation_packages == "yes" %}
+    "plotly>=5.0.0",
+    "bokeh>=3.0.0",
+    "altair>=5.0.0",
+    {% endif %}
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.4.0",
+    "black>=24.0.0",
+    "mypy>=1.9.0",
+    "pytest>=8.0.0",
+    "bandit>=1.7.7",
+    "nbstripout>=0.6.1",
+    {% if cookiecutter.pre_commit_hook == "yes" %}
+    "pre-commit>=3.5.0",
+    {% endif %}
+]
+
+{% if cookiecutter.pre_commit_hook == "yes" %}
+[tool.black]
+line-length = 88
+target-version = ['py{{ cookiecutter.python_version_number.replace(".", "") }}']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | build
+  | dist
+  | migrations
+)/
+'''
+
+[tool.ruff]
+line-length = 88
+src = ["{{ cookiecutter.module_name }}"]
+target-version = "py{{ cookiecutter.python_version_number.replace(".", "") }}"
+lint.select = [
+    "E", "F", "B", "I", "C90", "N", "D", "UP", "PL", "RUF"
+]
+lint.ignore = [
+    "D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107"
+]
+
+[tool.mypy]
+python_version = "{{ cookiecutter.python_version_number }}"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+{% endif %}

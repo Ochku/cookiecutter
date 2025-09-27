@@ -1,0 +1,58 @@
+# .pre-commit-config.yaml (Corrected)
+
+repos:
+  # 1. Basic Repository Hygiene and Consistency Checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^template/
+      - id: end-of-file-fixer
+        exclude: ^template/
+      - id: check-yaml
+        exclude: ^template/
+      - id: check-added-large-files
+        exclude: ^template/
+      - id: check-merge-conflict
+        exclude: ^template/
+      - id: debug-statements
+        exclude: ^template/
+      - id: debug-statements
+        exclude: ^template/
+
+  # 2. Code Formatting (Black)
+  - repo: https://github.com/psf/black
+    rev: 25.9.0
+    hooks:
+      - id: black
+        language_version: python3.13\
+        exclude: ^template/
+
+  # 3. Linting (Ruff)
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.13.2
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+        exclude: ^template/
+
+  # 4. Static Type Checking (Mypy)
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.18.2
+    hooks:
+      - id: mypy
+        exclude: ^template/
+
+  # 5. Security Check (Bandit)
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.8.6
+    hooks:
+      - id: bandit
+        exclude: ^template/
+
+  # 6. Jupyter Notebook Hygiene
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.8.1
+    hooks:
+      - id: nbstripout
+        exclude: ^template/

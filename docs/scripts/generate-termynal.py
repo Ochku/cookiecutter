@@ -45,18 +45,21 @@ def execute_command_and_get_output(command, input_script):
 
 ccds_script = [
     ("project_name", "My Analysis"),
-    ("repo_name", "my_analysis"),
+    ("project_slug", "my_analysis"),
     ("module_name", ""),
     ("author_name", "Dat A. Scientist"),
     ("description", "This is my analysis of the data."),
     ("python_version_number", "3.12"),
-    ("Choose from", "2"),  # environment_manager
-    ("Choose from", "1"),  # dependency_file
-    ("Choose from", "2"),  # pydata_packages
-    ("Choose from", "1")   # testing_framework
-    ("Choose from", "1"),  # linting_and_formatting
-    ("Choose from", "2"),  # docs
-    ("Choose from", "1"),  # include_code_scaffold
+    ("Choose from", "1"),  # include_basic_packages
+    ("Choose from", "1"),  # include_database_packages
+    ("Choose from", "1"),  # include_visualisation_packages
+    ("Choose from", "1"),  # scaffolding_basic
+    ("Choose from", "1"),  # scaffolding_visualisations
+    ("Choose from", "1"),  # scaffolding_data_cleaning
+    ("Choose from", "1"),  # scaffolding_database
+    ("Choose from", "1"),  # include_notebooks
+    ("Choose from", "1"),  # pre_commit_hook
+    ("Choose from", "2"),  # include_tests
 ]
 
 
@@ -129,9 +132,10 @@ def render_termynal():
     output = "\n".join(html_lines)
 
     # Ensure that all options are contained in the output
-    options = json.load((CCDS_ROOT / "ccds.json").open("r")).keys()
-    for option in options:
-        assert option in output, f'Option "{option}" not found in termynal output.'
+    options = json.load((CCDS_ROOT / "ccds-help.json").open("r"))
+    option_fields = [field["field"] for field in options]
+    for option in option_fields:
+        raise AssertionError(f'Option "{option}" not found in termynal output.')
 
     # replace local directory in ccds call with URL so it can be used for documentation
     output = output.replace(
